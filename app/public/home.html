@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Friend Finder -Express</title>
+
+  <!-- Style Sheets -->
+  <link rel="stylesheet" type="text/css" href="../assets/reset.css" />
+  <link rel="stylesheet" type="text/css" href="../assets/style.css" />
+
+  <!-- Latest compiled and minified CSS & JS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+<div class="container">
+    <div class="jumbotron" id="background">
+         <h1 style="text-align: center; color: black;">Friend Finder Express</h1>
+         <h3 style="text-align: center; color: black;">A great place to meet a great friend match!</h3>
+         <hr>
+         <a href="/survey">
+            <button class="btn btn-danger btn-lg" id="profile-button">
+                <span class="fa fa-plus"></span> Answer the questions for your special profile.</button>
+        </a>
+    </div>
+   </div>
+
+
+   <script type="text/javascript">
+    $("#profile-button").on("click", function() {
+      //var answerQuestions = $("#character-search").val().trim();
+
+      // Using a RegEx Pattern to remove spaces from searchedCharacter
+      // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
+      //searchedCharacter = searchedCharacter.replace(/\s+/g, "").toLowerCase();
+
+      $.get("/api/friends/" + searchedCharacter, function(data) {
+        console.log(data);
+        if (data) {
+          $("#stats").show();
+          $("#name").text(data.name);
+          $("#role").text(data.role);
+          $("#age").text(data.age);
+          $("#force-points").text(data.forcePoints);
+        }
+        else {
+          $("#name").text("The force is not strong with this one. Your character was not found.");
+          $("#stats").hide();
+        }
+      });
+    });
+  </script>
+   </body>
