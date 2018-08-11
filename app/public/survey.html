@@ -165,9 +165,112 @@
             <br>
           </div>
 
-          <button type="button" class="btn btn-primary btn-lg btn-block">Block level button
+          <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#myModal">Submit
           <i class="fa fa-check-circle" aria-hidden="true"></i>
           </button>
-
           <hr>
-          </body>
+
+        <div class="container">
+            <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+    
+             <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"></button>
+                    <h3 class="modal-title">
+                        <strong>Best Match</strong>
+                    </h3>
+        </div>
+            <div class="modal-body">
+                <h2 id="matchName">Alice</h2>
+                <!-- <img src="../assets/pics/Alice.jpg" style="height:300px; width: 100%;"> -->
+                    <!-- <p>Some text in the modal.</p> -->
+                <img id="matchPic" src="../assets/pics/Alice.jpg" alt="" width = 250px>
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+        
+          
+          
+          <!-- This code handles how items from the form are sent to the server. -->
+           <script type="text/javascript"> 
+        
+          // $(document).ready(function(){
+               //button click to validate survey
+               $(".button").on("click", function(event){
+                   event.preventDefault();
+
+                   function validate(){
+                       var isValid = true;
+                       $(".form-control").each(function(){
+                           if($(this).val() === ""){
+                               isValid = false;
+                           }       
+                       });
+
+                       $(".chosen-select").each(function(){
+                           if($(this).value() === ""){
+                           isValid = false;
+                           }
+                       });
+
+                       return isValid;
+                   }
+
+                   if(validate()){
+                       var userData = {
+                           name: $("#nameInput").val(),
+                           photo: $("#photoInput").val(),
+                           scores: [
+                            $("#question1").val(),
+                            $("#question2").val(),
+                            $("#question3").val(),
+                            $("#question4").val(),
+                            $("#question5").val(),
+                            $("#question6").val(),
+                            $("#question7").val(),
+                            $("#question8").val(),
+                            $("#question9").val(),
+                            $("#question10").val(),
+                        ]
+                       };
+                    
+                    //POST to friends api
+                  $.post("/api/friends", userData, function(){
+                    //grab the post so that you can match the name and photo
+                    $("#matchName").text(data.name);
+                    $("#matchPic").attr("src", data.photo);
+
+                    //best match
+                    $("#results-modal").modal("toggle");
+                  });
+                }else{
+                    alert("Fill out all fields before submitting");
+                }
+            });
+    
+                      //clear form when submitting
+                      $("nameInput").val("");
+                      $("PhotoInput").val("");
+                      $("#question1").val("");
+                      $("#question2").val("");
+                      $("#question3").val("");
+                      $("#question4").val("");
+                      $("#question5").val("");
+                      $("#question6").val("");
+                      $("#question7").val("");
+                      $("#question8").val("");
+                      $("#question9").val("");
+                      $("#question10").val("");
+              
+              
+              </script> 
+            </body>
+        </html>

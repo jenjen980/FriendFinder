@@ -42,5 +42,11 @@ var friends = [{
     scores: [
         2,2,5,5,1,1,2,5,1,5
     ]
-},
-]
+}];
+
+//How to export the array
+module.exports = friends;
+//console.log(module.exports);
+
+//for (i=0; i<friends.length; i++){
+
